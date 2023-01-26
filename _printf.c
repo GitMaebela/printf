@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "main.h"
 
-/*
+/**
 * _printf - produces output according to a format
 * @format: character string. The format string is composed of zero or more directives
 *
@@ -49,7 +49,7 @@ int _printf(const char *format, ...) {
     return count;
 }
 
-/*
+/**
 * numberOfDigit - count the number of digits in a number
 * @number: number to count digits
 *
