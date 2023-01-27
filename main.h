@@ -2,6 +2,6 @@
 #define _MAIN_H_
 
 int _printf(const char *format, ...);
-int numberOfDigit(int number);
+int number_of_digit(int number);
 
 #endif
