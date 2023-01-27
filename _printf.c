@@ -10,9 +10,9 @@
 */
 int _printf(const char *format, ...)
 {
-    va_list args; // variable argument list
+    va_list args;
     int count = 0;
-    va_start(args, format); // initialize variable argument list
+    va_start(args, format);
 
     for (int i = 0; format[i] != '\0'; i++)
     {
@@ -22,20 +22,20 @@ int _printf(const char *format, ...)
             switch (format[i])
             {
                 case 'c':
-                    putchar(va_arg(args, int)); // print single character
+                    putchar(va_arg(args, int));
                     count++;
                     break;
                 case 's':
-                    fputs(va_arg(args, char *), stdout); // print string
+                    fputs(va_arg(args, char *), stdout);
                     count += strlen(va_arg(args, char *));
                     break;
                 case 'd':
                 case 'i':
-                    printf("%d", va_arg(args, int)); // print decimal number
-                    count += numberOfDigit(va_arg(args, int));
+                    printf("%d", va_arg(args, int));
+                    count += number_of_digit(va_arg(args, int));
                     break;
                 case '%':
-                    putchar('%'); // print %
+                    putchar('%');
                     count++;
                     break;
                 default:
@@ -51,19 +51,20 @@ int _printf(const char *format, ...)
         }
     }
 
-    va_end(args); // end variable argument list
+    va_end(args);
     return count;
 }
 
 /**
-* numberOfDigit - count the number of digits in a number
+* number_of_digit - count the number of digits in a number
 * @number: number to count digits
 *
 * Return: number of digits
 */
-int numberOfDigit(int number)
+int number_of_digit(int number)
 {
     int count = 0;
+
     if (number == 0)
         return 1;
     if (number < 0)
