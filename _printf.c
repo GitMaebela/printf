@@ -20,11 +20,11 @@ int print_string(va_list valist)
         str = "(null)";
     for (; *str; str++)
     {
-        putchar(*str);
-        count++;
+        count += print_char(*str);
     }
     return (count);
 }
+
 
 /**
 * print_char - writes the character c to stdout
@@ -91,7 +91,7 @@ int _printf(const char *format, ...)
                     len += print_char(va_arg(args, int));
                     break;
                 case 's':
-                    len += print_string(va_arg(valist, char *));
+                    len += print_string(args);
                     break;
                 case '%':
                     len += print_char('%');
