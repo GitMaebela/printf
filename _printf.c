@@ -3,11 +3,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "main.h"
 
 /**
 * print_string - function that prints a string
-* @list: list of arguments passed to _printf
+* @valist: list of arguments passed to _printf
 *
 * Return: number of characters printed
 */
@@ -20,7 +19,7 @@ int print_string(va_list valist)
         str = "(null)";
     for (; *str; str++)
     {
-        _putchar(*str);
+        putchar(*str);
         count++;
     }
     return (count);
@@ -101,7 +100,6 @@ int _printf(const char *format, ...)
                     len += print_number(va_arg(args, int));
                     break;
                 default:
-                    // Handle error for unknown conversion specifier
                     len = -1;
                     goto end;
             }
