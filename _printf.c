@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "main.h"
 
 /**
 * print_string - function that prints a string
@@ -90,7 +91,7 @@ int _printf(const char *format, ...)
                     len += print_char(va_arg(args, int));
                     break;
                 case 's':
-                    len += print_string(va_arg(args, char *));
+                    len += print_string(va_arg(valist, char *));
                     break;
                 case '%':
                     len += print_char('%');
