@@ -1,7 +1,71 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "main.h"
+
+/**
+* print_string - function that prints a string
+* @list: list of arguments passed to _printf
+*
+* Return: number of characters printed
+*/
+int print_string(va_list valist)
+{
+    char *str = va_arg(valist, char *);
+    int count = 0;
+
+    if (str == NULL)
+        str = "(null)";
+    for (; *str; str++)
+    {
+        _putchar(*str);
+        count++;
+    }
+    return (count);
+}
+
+/**
+* print_char - writes the character c to stdout
+* @c: The character to print
+*
+* Return: On success 1.
+* On error, -1 is returned, and errno is set appropriately.
+*/
+int print_char(char c)
+{
+    return (write(1, &c, 1));
+}
+
+/**
+* print_number - prints an integer
+* @n: integer to be printed
+*
+* Return: the number of characters printed
+*/
+int print_number(int n)
+{
+    int count = 0;
+    unsigned int num;
+
+    if (n < 0)
+    {
+        count += print_char('-');
+        num = -n;
+    }
+    else
+    {
+        num = n;
+    }
+
+    if (num >= 10)
+    {
+        count += print_number(num / 10);
+    }
+    count += print_char(num % 10 + '0');
+    return (count);
+}
 
 /**
 * _printf - produces output according to a format
@@ -12,71 +76,44 @@
 int _printf(const char *format, ...)
 {
     va_list args;
-    int count,i = 0;
+    int len = 0;
+
     va_start(args, format);
 
-    for (i = 0; format[i] != '\0'; i++)
+    while (*format)
     {
-        if (format[i] == '%')
+        if (*format == '%')
         {
-            i++;
-            switch (format[i])
+            format++;
+            switch (*format)
             {
                 case 'c':
-                    putchar(va_arg(args, int));
-                    count++;
+                    len += print_char(va_arg(args, int));
                     break;
                 case 's':
-                    fputs(va_arg(args, char *), stdout);
-                    count += strlen(va_arg(args, char *));
+                    len += print_string(va_arg(args, char *));
+                    break;
+                case '%':
+                    len += print_char('%');
                     break;
                 case 'd':
                 case 'i':
-                    printf("%d", va_arg(args, int));
-                    count += number_of_digit(va_arg(args, int));
-                    break;
-                case '%':
-                    putchar('%');
-                    count++;
+                    len += print_number(va_arg(args, int));
                     break;
                 default:
-                    putchar(format[i]);
-                    count++;
-                    break;
+                    // Handle error for unknown conversion specifier
+                    len = -1;
+                    goto end;
             }
         }
         else
         {
-            putchar(format[i]);
-            count++;
+            len += print_char(*format);
         }
+        format++;
     }
 
+end:
     va_end(args);
-    return count;
-}
-
-/**
-* number_of_digit - count the number of digits in a number
-* @number: number to count digits
-*
-* Return: number of digits
-*/
-int number_of_digit(int number)
-{
-    int count = 0;
-
-    if (number == 0)
-        return 1;
-    if (number < 0)
-    {
-        count++;
-        number *= -1;
-    }
-    while (number > 0)
-    {
-        count++;
-        number /= 10;
-    }
-    return count;
+    return (len);
 }
