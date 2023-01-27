@@ -8,15 +8,19 @@
 *
 * Return: the number of characters printed (excluding the null byte used to end output to strings)
 */
-int _printf(const char *format, ...) {
+int _printf(const char *format, ...)
+{
     va_list args; // variable argument list
     int count = 0;
     va_start(args, format); // initialize variable argument list
 
-    for (int i = 0; format[i] != '\0'; i++) {
-        if (format[i] == '%') {
+    for (int i = 0; format[i] != '\0'; i++)
+    {
+        if (format[i] == '%')
+        {
             i++;
-            switch (format[i]) {
+            switch (format[i])
+            {
                 case 'c':
                     putchar(va_arg(args, int)); // print single character
                     count++;
@@ -39,7 +43,9 @@ int _printf(const char *format, ...) {
                     count++;
                     break;
             }
-        } else {
+        }
+        else
+        {
             putchar(format[i]);
             count++;
         }
@@ -55,15 +61,18 @@ int _printf(const char *format, ...) {
 *
 * Return: number of digits
 */
-int numberOfDigit(int number) {
+int numberOfDigit(int number)
+{
     int count = 0;
     if (number == 0)
         return 1;
-    if (number < 0) {
+    if (number < 0)
+    {
         count++;
         number *= -1;
     }
-    while (number > 0) {
+    while (number > 0)
+    {
         count++;
         number /= 10;
     }
